@@ -1,11 +1,9 @@
 package scaler.project.ecommercemasterbackendproject.models;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class Product {
     private Long id;
     private String title;
