@@ -6,9 +6,11 @@ import lombok.ToString;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import scaler.project.ecommercemasterbackendproject.dtos.FakeStoreProductDTO;
+import scaler.project.ecommercemasterbackendproject.exceptions.ProductNotFoundException;
 import scaler.project.ecommercemasterbackendproject.models.Category;
 import scaler.project.ecommercemasterbackendproject.models.Product;
 
+import javax.management.InstanceNotFoundException;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -37,8 +39,14 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long productId) {
+    public Product getProductById(Long productId) throws ProductNotFoundException {
         FakeStoreProductDTO fakeStoreProductDTO =  restTemplate.getForObject("https://fakestoreapi.com/products/" + productId, FakeStoreProductDTO.class);
+        if (fakeStoreProductDTO == null){
+            throw new ProductNotFoundException(
+                    (long) (Math.random() * 1_000_000_000L), "Product with id " + productId + " not found in the fake store API.",
+                    productId
+            );
+        }
         return convertToProduct(fakeStoreProductDTO);
     }
 
