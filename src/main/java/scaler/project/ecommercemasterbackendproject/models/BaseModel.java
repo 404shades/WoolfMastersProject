@@ -8,6 +8,7 @@ import lombok.Data;
 @Entity()
 public class BaseModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
 

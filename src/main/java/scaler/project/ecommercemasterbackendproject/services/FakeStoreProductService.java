@@ -9,13 +9,14 @@ import scaler.project.ecommercemasterbackendproject.dtos.FakeStoreProductDTO;
 import scaler.project.ecommercemasterbackendproject.exceptions.ProductNotFoundException;
 import scaler.project.ecommercemasterbackendproject.models.Category;
 import scaler.project.ecommercemasterbackendproject.models.Product;
+import scaler.project.ecommercemasterbackendproject.projections.ProductTitleAndDescriptionView;
 
 import javax.management.InstanceNotFoundException;
 import java.util.List;
 import java.util.stream.Stream;
 
 @Data
-@Service
+@Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
     RestTemplate restTemplate;
 
@@ -60,5 +61,15 @@ public class FakeStoreProductService implements ProductService {
         return Stream.of(fakeStoreProductDTOs)
                 .map(this::convertToProduct)
                 .toList();
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public ProductTitleAndDescriptionView getProductTitleAndDescription(Long projectId) {
+        return null;
     }
 }
