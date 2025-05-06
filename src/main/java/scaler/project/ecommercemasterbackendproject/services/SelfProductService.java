@@ -25,7 +25,8 @@ public class SelfProductService implements ProductService {
 
     @Override
     public Product getProductById(Long productId) throws ProductNotFoundException {
-        return null;
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(404L, "Product not found", productId));
     }
 
     @Override
@@ -36,12 +37,21 @@ public class SelfProductService implements ProductService {
 
     @Override
     public Product createProduct(Product product) {
-        if (categoryRepository.findById(product.getCategory().getId()).isPresent()) {
-            return productRepository.save(product);
+        Category category = product.getCategory();
+        if (category == null) {
+            throw new IllegalArgumentException("Category is required");
         }
-        Category category = categoryRepository.save(product.getCategory());
+        if (category.getId() == null) {
+            category = categoryRepository.save(category);
+        } else {
+            Category existing = categoryRepository.findById(category.getId()).orElse(null);
+            if (existing == null) {
+                category = categoryRepository.save(category);
+            } else {
+                category = existing;
+            }
+        }
         product.setCategory(category);
-
         return productRepository.save(product);
     }
 

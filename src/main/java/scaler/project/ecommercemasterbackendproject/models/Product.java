@@ -12,6 +12,6 @@ public class Product extends BaseModel{
     private String description;
     private Double price;
     @ManyToOne
-    @JoinColumn(columnDefinition = "category_cat_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 }
