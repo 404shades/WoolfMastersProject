@@ -64,8 +64,24 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(Product product) {
+    public Product createProduct(Product product, String ownerEmail) {
         return null;
+    }
+
+    // fake store is read only for us, so these are not supported
+    @Override
+    public Product updateProduct(Long productId, Product product, String userEmail) {
+        throw new UnsupportedOperationException("Update is not supported for fake store products");
+    }
+
+    @Override
+    public void deleteProduct(Long productId, String userEmail) {
+        throw new UnsupportedOperationException("Delete is not supported for fake store products");
+    }
+
+    @Override
+    public List<Product> getProductsByOwner(String ownerEmail) {
+        return List.of();
     }
 
     @Override

@@ -34,3 +34,8 @@ build/
 
 # Local deployment scripts
 deploy_plan.sh
+
+.DS_Store
+
+# Local HTTP client test files
+http/
